@@ -7,31 +7,29 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-  runs-on: ubuntu-latest
+  dbdocs:
+    name: Build DBDocs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dbdocs
+        run: sudo npm install -g dbdocs
 
-  steps:
-    - uses: actions/checkout@v2
+      - name: Check dbdocs
+        run: dbdocs
 
-    - name: Install dbdocs
-      run: sudo npm install -g dbdocs
+      - name: Concatenate dbml
+        run: |
+          cat ./sql/project.dbml > tmp.dbml &&
+          echo -e "\n\n" >> tmp.dbml &&
+          cat ./sql.schema.dbml >> tmp.dbml 
 
-    - name: Check dbdocs
-      run: dbdocs
+      - name: Validate dbml
+        run: dbdocs validate tmp.dbml
 
-    - name: Concatenate dbml
-      run: |
-        cat ./sql/project.dbml > tmp.dbml &&
-        echo -e "\n\n" >> tmp.dbml &&
-        cat ./sql.schema.dbml >> tmp.dbml 
+      - name: Update dbdocs project
+        env:
+          DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
+        run: dbdocs build tmp.dbml
 
-    - name: Validate dbml
-      run: dbdocs validate tmp.dbml
-
-    - name: Update dbdocs project
-      env:
-        DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
-      run: dbdocs build tmp.dbml
-
-    - name: Cleanup
-      run: rm tmp.dbml
+      - name: Cleanup
+        run: rm tmp.dbml
