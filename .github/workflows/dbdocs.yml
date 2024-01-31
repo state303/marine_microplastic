@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+  runs-on: ubuntu latest
+
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dbdocs
+      run: sudo npm install -g dbdocs
+
+    - name: Check dbdocs
+      run: dbdocs
+
+    - name: Concatenate dbml
+      run: |
+        cat ./sql/project.dbml > tmp.dbml &&
+        echo -e "\n\n" >> tmp.dbml &&
+        cat ./sql.schema.dbml >> tmp.dbml 
+
+    - name: Validate dbml
+      run: dbdocs validate tmp.dbml
+
+    - name: Update dbdocs project
+      env:
+        DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
+      run: dbdocs build tmp.dbml
+
+    - name: Cleanup
+      run: rm tmp.dbml

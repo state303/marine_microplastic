@@ -1,0 +1,82 @@
+Table "organization" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(255) [unique, not null]
+}
+
+Table "doi" {
+  "id" SERIAL [pk, increment]
+  "value" VARCHAR(1000) [unique, not null]
+}
+
+Table "ocean" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(255) [unique, not null]
+}
+
+Table "region" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(255) [unique, not null]
+}
+
+Table "subregion" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(255) [unique, not null]
+}
+
+Table "sample_method" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(255) [unique, not null]
+}
+
+Table "unit" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(100) [unique, not null]
+}
+
+Table "reference" {
+  "id" SERIAL [pk, increment]
+  "title" VARCHAR(1000) [unique, not null]
+}
+
+Table "measurement" {
+  "id" SERIAL [pk, increment]
+  "longitude" DOUBLEPRECISION [not null]
+  "latitude" DOUBLEPRECISION [not null]
+  "ocean" INTEGER
+  "regiON" INTEGER
+  "doi" INTEGER
+  "organization" INTEGER
+  "subregion" INTEGER
+  "sample_method" INTEGER
+  "date" DATE [not null]
+  "value" DOUBLEPRECISION [not null, default: 0.0]
+  "density_min" DOUBLEPRECISION [default: 0.0]
+  "density_max" DOUBLEPRECISION [default: 0.0]
+  "unit" INTEGER [not null]
+  "global_id" UUID
+  "access_link" VARCHAR(1024)
+  "reference" INTEGER
+
+Indexes {
+  (latitude, longitude, date) [unique, name: "uq__measurement__combined"]
+  date [name: "idx__measurement__date"]
+  (longitude, latitude) [name: "idx__measurement__longitude_latitude"]
+  value [name: "idx__measurement__value"]
+}
+}
+
+Ref:"ocean"."id" < "measurement"."ocean"
+
+Ref:"region"."id" < "measurement"."regiON"
+
+Ref:"doi"."id" < "measurement"."doi"
+
+Ref:"organization"."id" < "measurement"."organization"
+
+Ref:"subregion"."id" < "measurement"."subregion"
+
+Ref:"sample_method"."id" < "measurement"."sample_method"
+
+Ref:"unit"."id" < "measurement"."unit"
+
+Ref:"reference"."id" < "measurement"."reference"

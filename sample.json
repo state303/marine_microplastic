@@ -1,0 +1,22 @@
+{
+  "OBJECTID": 1,
+  "OCEANS": "Atlantic Ocean",
+  "REGIONS": null,
+  "SUBREGIONS": null,
+  "SAMPMETHOD": "Neuston net",
+  "MEASUREMEN": 0,
+  "UNIT": "pieces/m3",
+  "DENSRANGE": "0-0.0005",
+  "DENSTEXT": "Very Low",
+  "SHORTREF": "Law et al.2010",
+  "LONGREF": "Law, K.L., S. Morét-Ferguson, N.A. Maximenko, G. Proskurowski, E.E. Peacock, J. Hafner J, et al. 2010. Plastic accumulation in the North Atlantic subtropical gyre. Science. 329(5996):1185–8.",
+  "DOI": "https://doi.org/10.1126/science.1192321",
+  "ORG": "Sea Education Association",
+  "KEYWORDS": "SEA",
+  "ACCESSNO": 211007,
+  "ACCESSLINK": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:211007",
+  "Latitude": 45.28,
+  "Longitude": -60.29,
+  "Date": 616291200000,
+  "GlobalID": "88ccb360-a4b6-4dac-954e-4eb7d61ecab4"
+}
