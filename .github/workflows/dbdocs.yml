@@ -27,7 +27,7 @@ jobs:
         run: |
           cat ./sql/project.dbml > tmp.dbml &&
           echo -e "\n\n" >> tmp.dbml &&
-          cat ./sql.schema.dbml >> tmp.dbml 
+          cat ./sql/schema.dbml >> tmp.dbml 
 
       - name: Validate dbml
         run: dbdocs validate tmp.dbml
